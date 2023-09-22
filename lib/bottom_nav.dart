@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stream/HomePage/home.dart';
 import 'package:stream/appbar.dart';
 import 'package:stream/booking.dart';
@@ -38,7 +39,12 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black,
+          showSelectedLabels: true, // Show labels for selected items
+          showUnselectedLabels: true, //
+          unselectedLabelStyle: TextStyle(color: Colors.grey),
+          selectedFontSize: 15.sp,
           backgroundColor:Colors.red,
           currentIndex: selectedIndex,
           onTap: _onItemTapped,
@@ -65,8 +71,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             ),
 
           ],
-          selectedLabelStyle: TextStyle(color: Color(0xFFF31A54)),
-          unselectedLabelStyle: TextStyle(color: Colors.black),
+          // selectedLabelStyle: TextStyle(color: Color(0xFFF31A54)),
+          // unselectedLabelStyle: TextStyle(color: Colors.black),
         ),
       ),
     );

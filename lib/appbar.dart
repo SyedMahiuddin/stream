@@ -5,7 +5,7 @@ import 'package:stream/bottom_nav.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
-  Size get preferredSize => Size.fromHeight(55.0.h); // Set your preferred height
+  Size get preferredSize => Size.fromHeight(60.0.h); // Set your preferred height
 
   @override
   Widget build(BuildContext context) {

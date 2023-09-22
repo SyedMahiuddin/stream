@@ -194,7 +194,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             SizedBox(
-              height: 12.h,
+              height: 10.h,
             ),
             Card(
               child: Stack(
@@ -249,23 +249,23 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 10.h,
             ),
-            Card(
-              elevation: 4.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: YoutubePlayer(
-                  controller: _controller,
-                  showVideoProgressIndicator:
-                      true, // Customize the live indicator color
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
+            // Card(
+            //   elevation: 4.0,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(12),
+            //   ),
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(15),
+            //     child: YoutubePlayer(
+            //       controller: _controller,
+            //       showVideoProgressIndicator:
+            //           true, // Customize the live indicator color
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 10.h,
+            // ),
             Text(
               'What Clients says',
               style: TextStyle(
@@ -274,6 +274,7 @@ class _HomeState extends State<Home> {
                   fontSize: 25.sp,
                   fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 10.h,),
             CarouselSlider(
               options: CarouselOptions(
                 height: 180.0,
