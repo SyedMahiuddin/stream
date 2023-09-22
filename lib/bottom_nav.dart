@@ -7,6 +7,7 @@ import 'package:stream/reviews.dart';
 import 'package:stream/ticket.dart';
 
 class BottomNavScreen extends StatefulWidget {
+  static const String routeName="bottompage";
   const BottomNavScreen({super.key});
 
   @override
@@ -17,8 +18,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
 
   final List<Widget> _widgetOptions = <Widget>[
     Home(),
-    BookingScreen(),
     TicketScreen(),
+    BookingScreen(),
     ReviewScreen(),
     ContactScreen(),
   ];

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +32,11 @@ class _HomeState extends State<Home> {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis quam in odio fringilla malesuada.",
     "In et tortor vitae quam ultrices convallis. Ut a elit eu neque facilisis volutpat ut nec lorem.",
     "Pellentesque vel ligula eu urna ullamcorper venenatis eget ac leo. Sed eget enim sed elit tempus placerat.",
-
   ];
+  List<String> imagePaths = ['images/audio.jpg', 'images/livecast.jpg'];
+  int _currentImageIndex = 0;
+  final CarouselController controller = CarouselController();
+  int _animationCount = 0;
 
   @override
   void initState() {
@@ -57,7 +62,7 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
               height: 12.h,
@@ -108,19 +113,37 @@ class _HomeState extends State<Home> {
                       ],
                     )),
                 Positioned(
-                    top: 90.h,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 8.0.sp),
-                      child: AnimatedTextKit(animatedTexts: [
-                        TyperAnimatedText(
-                          "Streamstek IS YOUR LOCAL PARTNER FOR THE BEST \nCORPORATE VIDEO PRODUCTION, LIVE-STREAMING, \nPHOTOGRAPHY, EVENTS AND LUXURY LIFESTYLE ",
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Poppins',
-                              color: Colors.white),
-                        )
-                      ], totalRepeatCount:40 ),
-                    )),
+                  top: 90.h,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0.sp),
+                    child: StreamBuilder<int>(
+                      stream:
+                          Stream<int>.periodic(Duration(seconds: 3), (i) => i),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          _animationCount = snapshot.data!;
+                        }
+                        return AnimatedTextKit(
+                          animatedTexts: [
+                            TyperAnimatedText(
+                              "Streamstek IS YOUR LOCAL PARTNER FOR THE BEST \nCORPORATE VIDEO PRODUCTION, LIVE-STREAMING, \nPHOTOGRAPHY, EVENTS AND LUXURY LIFESTYLE ",
+                              textStyle: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                          onFinished: () {
+                            setState(() {
+                              _animationCount++;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
                 Positioned(
                     top: 150.h,
                     child: Padding(
@@ -173,7 +196,6 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 12.h,
             ),
-
             Card(
               child: Stack(
                 children: [
@@ -183,19 +205,25 @@ class _HomeState extends State<Home> {
                         'https://streamstek.com/wp-content/uploads/2023/04/blog-live-hybrid-event-cover.webp'),
                   ),
                   Positioned(
-                    top: 75.h,
+                      top: 75.h,
                       child: Padding(
-                        padding:  EdgeInsets.only(left: 20.0.sp),
+                        padding: EdgeInsets.only(left: 20.0.sp),
                         child: Text(
-                    '"IF A PICTURE IS WORTH A THOUSAND WORDS, \nTHEN streamstek WILL LEAVE YOU SPEECHLESS"',maxLines: 2,
-                    style: TextStyle(color: Colors.white,fontSize: 15.sp,fontFamily: 'Poppins',fontWeight: FontWeight.bold),
-                  ),
+                          '"IF A PICTURE IS WORTH A THOUSAND WORDS, \nTHEN streamstek WILL LEAVE YOU SPEECHLESS"',
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.sp,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold),
+                        ),
                       ))
                 ],
               ),
             ),
-            SizedBox(height: 10.h,),
-
+            SizedBox(
+              height: 10.h,
+            ),
             Center(
               child: Column(
                 children: [
@@ -218,7 +246,9 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(
+              height: 10.h,
+            ),
             Card(
               elevation: 4.0,
               shape: RoundedRectangleBorder(
@@ -229,11 +259,13 @@ class _HomeState extends State<Home> {
                 child: YoutubePlayer(
                   controller: _controller,
                   showVideoProgressIndicator:
-                  true, // Customize the live indicator color
+                      true, // Customize the live indicator color
                 ),
               ),
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(
+              height: 10.h,
+            ),
             Text(
               'What Clients says',
               style: TextStyle(
@@ -244,7 +276,8 @@ class _HomeState extends State<Home> {
             ),
             CarouselSlider(
               options: CarouselOptions(
-                height: 180.0, // Adjust the height as needed
+                height: 180.0,
+                // Adjust the height as needed
                 autoPlay: true,
                 autoPlayInterval: Duration(seconds: 5),
                 autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -267,22 +300,37 @@ class _HomeState extends State<Home> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.person,size: 50.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.person,
+                                    size: 50.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Column(
                                     children: [
-                                      Text('Nick Presley',style: TextStyle(fontSize: 15.sp,fontWeight: FontWeight.bold),),
-                                      Text('Adelle Tracy',style: TextStyle(fontSize: 13.sp),),
+                                      Text(
+                                        'Nick Presley',
+                                        style: TextStyle(
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        'Adelle Tracy',
+                                        style: TextStyle(fontSize: 13.sp),
+                                      ),
                                     ],
                                   )
                                 ],
                               ),
-                              SizedBox(height: 5.h,),
+                              SizedBox(
+                                height: 5.h,
+                              ),
                               Text(
                                 review,
                                 style: TextStyle(
@@ -302,25 +350,158 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 12.h,
             ),
-            // SizedBox(
-            //   child: ListView.builder(
-            //     scrollDirection: Axis.horizontal,
-            //       itemCount: 10,
-            //       itemBuilder: (context,index){
-            //     ClipRRect(
-            //       borderRadius: BorderRadius.circular(15),
-            //       child: YoutubePlayer(
-            //         controller: _controller,
-            //         showVideoProgressIndicator:
-            //         true, // Customize the live indicator color
-            //       ),
-            //     );
-            //   }),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+              height: 550.h,
+              width: MediaQuery.of(context).size.width - 20,
+              child: Padding(
+                padding: EdgeInsets.all(12.0.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'VIDEO PRODUCTION PRICING',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      'MADE EASY',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      'streamstek is proud to be the only miami video production company - to offer an online brochure of creative services and pricing; that are designed to fit your goals, timeline, and budget',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      'These are the same tools we use grow our business and lead the South Florida video production industry.',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      "Simply choose from individual services, all-inclusive packages, or request a custom quote to get things started. It's really that easy to get high-quality content created; for businesses of all shapes and sizes.",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        autoPlay: true,
+                        aspectRatio: 16 / 9,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enableInfiniteScroll: true,
+                        autoPlayAnimationDuration:
+                            const Duration(milliseconds: 800),
+                        viewportFraction: 0.8,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _currentImageIndex = index;
+                          });
+                        },
+                      ),
+                      items: imagePaths.map((imagePath) {
+                        return Image.asset(imagePath,
+                            height: 110.0, // Set your desired height
+                            width: 400.0);
+                      }).toList(),
+                      carouselController: controller,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: imagePaths.asMap().entries.map((entry) {
+                        int index = entry.key;
+                        return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentImageIndex == index
+                                ? AppColors.primaryColor
+                                : Colors.grey, // Active and inactive dot colors
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Center(
+                      child: Container(
+                        height: 30.h,
+                        width: 100.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.sp),
+                            color: AppColors.primaryColor,
+                            border: Border.all(color: Colors.transparent)),
+                        child: Center(
+                            child: Text(
+                          'Get Pricing',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w600),
+                        )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 12.h,
+            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10), color: Colors.white),
+            //   height: 550.h,
+            //   width: MediaQuery.of(context).size.width - 20,
+            //   child: Row(
+            //     children: [
+            //
+            //     ],
+            //   ),
             // )
           ],
         ),
       ),
     );
   }
-
 }

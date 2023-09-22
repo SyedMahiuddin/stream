@@ -9,15 +9,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return selectedIndex==3?SizedBox(): Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-      decoration: BoxDecoration(
-        color: Color(0xFFF31A54),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(15),
-          bottomRight: Radius.circular(15),
-        ),
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      flexibleSpace: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+          decoration: BoxDecoration(
+            color: Color(0xFFF31A54),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
+            ),
+          ),
+          child: Center(child: Image.asset("images/img.png"),),
       ),
-      child: Center(child: Image.asset("images/img.png"),),
     );
   }}

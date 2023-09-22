@@ -41,6 +41,8 @@ dependencies:
   youtube_player_flutter:
   animated_text_kit: ^4.2.2
   carousel_slider:
+  get:
+  video_player:
 
 dev_dependencies:
   flutter_test:

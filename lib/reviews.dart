@@ -25,7 +25,7 @@ class ReviewScreen extends StatelessWidget {
           },
         ),
       )
-      ..loadRequest(Uri.parse("https://streamstek.com/reviews/"));
+      ..loadRequest(Uri.parse("https://streamstek.com/review-page-for-app"));
     return Scaffold(
       body: WebViewWidget(controller: controller,)
     );
