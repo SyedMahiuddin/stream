@@ -44,6 +44,8 @@ dependencies:
   carousel_slider:
   get:
   video_player:
+  appinio_video_player: ^1.2.2
+  camera:
 
 dev_dependencies:
   flutter_test:
