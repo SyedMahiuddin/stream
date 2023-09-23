@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stream/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Home extends StatefulWidget {
@@ -16,6 +17,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  int selectedController=0;
   final String videoURl = 'https://www.youtube.com/watch?v=D3UnvGw87zA';
   List<String> videoUrls = [
     'https://www.youtube.com/watch?v=D3UnvGw87zA',
@@ -249,6 +258,89 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 10.h,
             ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width-30.w,
+          height: 180.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: videoUrls.length,
+            itemBuilder: (context, index) {
+              String id= YoutubePlayer.convertUrlToId(videoUrls[index])!;
+              YoutubePlayerController controller2 = YoutubePlayerController(
+                  initialVideoId: id!,
+                  flags: const YoutubePlayerFlags(
+                    mute: false,
+                    autoPlay: false,
+                    disableDragSeek: true,
+                    loop: false,
+                    isLive: false,
+                    forceHD: false,
+                    enableCaption: false,
+                  ));
+               if(index==selectedController){
+                 controller2.play();
+               }
+               else{
+                 controller2.pause();
+               }
+              return index==videoUrls.length-1?
+              SizedBox(
+                width: 270.w,
+                child: Center(
+                  child: Container(
+                    height: 55.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.primaryColor
+                    ),
+                    child: InkWell(
+                      onTap: (){
+                        _launchURL("https://www.youtube.com/watch?v=CKjl4XYLBDU&list=PLL4lSgC-rRQmk4vWuei41zEEgD892sJGS");
+                      },
+                      child: Padding(
+                        padding:  EdgeInsets.fromLTRB(18,8,18,8),
+                        child: Column(
+                          children: [
+                            Icon(Icons.arrow_circle_right_outlined, color: Colors.white,size: 25.sp,),
+                            SizedBox(height: 3,),
+                            Text("Watch more",style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white,fontSize: 15.sp),)
+                          ],
+                        ),
+                      ),
+                    )),
+                ),
+              ):
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Card(
+                  color: AppColors.primaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width-100.w,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              selectedController=index;
+                            });
+                          },
+                          child: YoutubePlayer(
+                                    controller: controller2,
+                                    showVideoProgressIndicator:
+                                        true, // Customize the live indicator color
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
             // Card(
             //   elevation: 4.0,
             //   shape: RoundedRectangleBorder(
