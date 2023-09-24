@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stream/HomePage/home.dart';
 import 'package:stream/appbar.dart';
-import 'package:stream/booking.dart';
+import 'package:stream/BookingPage/view/booking.dart';
 import 'package:stream/contact.dart';
-import 'package:stream/reviews.dart';
+import 'package:stream/ReviewPage/view/reviews.dart';
 import 'package:stream/ticket.dart';
 
 class BottomNavScreen extends StatefulWidget {
+  static const String routeName="bottompage";
   const BottomNavScreen({super.key});
 
   @override
@@ -17,8 +19,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
 
   final List<Widget> _widgetOptions = <Widget>[
     Home(),
-    BookingScreen(),
     TicketScreen(),
+    BookingScreen(),
     ReviewScreen(),
     ContactScreen(),
   ];
@@ -37,7 +39,12 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           child: _widgetOptions.elementAt(selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black,
+          showSelectedLabels: true, // Show labels for selected items
+          showUnselectedLabels: true, //
+          unselectedLabelStyle: TextStyle(color: Colors.grey),
+          selectedFontSize: 15.sp,
           backgroundColor:Colors.red,
           currentIndex: selectedIndex,
           onTap: _onItemTapped,
@@ -64,8 +71,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             ),
 
           ],
-          selectedLabelStyle: TextStyle(color: Color(0xFFF31A54)),
-          unselectedLabelStyle: TextStyle(color: Colors.black),
+          // selectedLabelStyle: TextStyle(color: Color(0xFFF31A54)),
+          // unselectedLabelStyle: TextStyle(color: Colors.black),
         ),
       ),
     );

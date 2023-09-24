@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -27,12 +28,20 @@ class _ContactScreenState extends State<ContactScreen> {
   }
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
-        child: InkWell(
-          onTap: (){
-            _launchDialer('+8801783080181');
-          },
-            child: Image.asset("images/call.gif")),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: (){
+                _launchDialer('+8801783080181');
+              },
+                child: Image.asset("images/call.gif")),
+            SizedBox(height: 10.h,),
+             Text('Contact for free Consulting',style: TextStyle(fontSize: 17.sp,fontWeight: FontWeight.bold),)
+          ],
+        ),
       ),
     );
   }
