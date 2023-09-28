@@ -73,9 +73,13 @@ class _HomeState extends State<Home> {
         'https://www.youtube.com/watch?v=B07MzA6IT58')
       ..initialize().then((value) => setState(() {}));
     _customVideoPlayerController = CustomVideoPlayerController(
-        context: context, videoPlayerController: _videoPlayerController,customVideoPlayerSettings: const CustomVideoPlayerSettings(
-      placeholderWidget: Center(child: CircularProgressIndicator(),),deviceOrientationsAfterFullscreen: [DeviceOrientation.portraitUp]
-    ));
+        context: context,
+        videoPlayerController: _videoPlayerController,
+        customVideoPlayerSettings: const CustomVideoPlayerSettings(
+            placeholderWidget: Center(
+              child: CircularProgressIndicator(),
+            ),
+            deviceOrientationsAfterFullscreen: [DeviceOrientation.portraitUp]));
     super.initState();
   }
 
@@ -86,7 +90,8 @@ class _HomeState extends State<Home> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()),
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -96,7 +101,7 @@ class _HomeState extends State<Home> {
               Stack(
                 children: [
                   Container(
-                    height: 195.h,
+                    height: 200.h,
                     width: MediaQuery.of(context).size.width - 20,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -112,7 +117,7 @@ class _HomeState extends State<Home> {
                   Opacity(
                     opacity: 0.4,
                     child: Container(
-                      height: 195.h,
+                      height: 200.h,
                       width: MediaQuery.of(context).size.width - 20,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
@@ -120,31 +125,31 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Positioned(
-                      top: 40.h,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 8.0.sp),
-                            child: Text(
-                              "TRUSTED MIAMI VIDEO PRODUCTION & \nLive Streaming COMPANY",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                  fontFamily: 'Poppins',
-                                  fontSize: 16.sp),
-                              maxLines: 4,
-                              textAlign: TextAlign.justify,
-                            ),
-                          ),
-                        ],
+                      top: 20.h,
+                      child: Container(
+                        // color: Colors.red,
+                        width: MediaQuery.of(context).size.width - 20,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "TRUSTED MIAMI VIDEO PRODUCTION & Live Streaming COMPANY",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                              fontSize: 14.sp),
+                          maxLines: 4,
+                          // textAlign: TextAlign.justify,
+                        ),
                       )),
                   Positioned(
-                    top: 90.h,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 8.0.sp),
+                    top: 70.h,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 20,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      // color: Colors.red,
                       child: StreamBuilder<int>(
-                        stream:
-                            Stream<int>.periodic(const Duration(seconds: 3), (i) => i),
+                        stream: Stream<int>.periodic(
+                            const Duration(seconds: 3), (i) => i),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             _animationCount = snapshot.data!;
@@ -152,7 +157,7 @@ class _HomeState extends State<Home> {
                           return AnimatedTextKit(
                             animatedTexts: [
                               TyperAnimatedText(
-                                "Streamstek IS YOUR LOCAL PARTNER FOR THE BEST \nCORPORATE VIDEO PRODUCTION, LIVE-STREAMING, \nPHOTOGRAPHY, EVENTS AND LUXURY LIFESTYLE ",
+                                "Streamstek IS YOUR LOCAL PARTNER FOR THE BEST CORPORATE VIDEO PRODUCTION, LIVE-STREAMING, PHOTOGRAPHY, EVENTS AND LUXURY LIFESTYLE ",
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Poppins',
@@ -175,20 +180,23 @@ class _HomeState extends State<Home> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 12.0.sp),
                         child: Container(
-                          height: 30.h,
-                          width: 100.w,
+                          height: 35.h,
+                          width: 150.w,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.sp),
                               color: AppColors.primaryColor,
                               border: Border.all(color: Colors.transparent)),
                           child: Center(
-                              child: Text(
-                            'Get Started',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Poppins',
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w600),
+                              child: FittedBox(
+                            child: Text(
+                              'Get Started',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           )),
                         ),
                       ))
@@ -209,14 +217,13 @@ class _HomeState extends State<Home> {
                 width: MediaQuery.of(context).size.width - 30.w,
                 height: 180.h,
                 child: Card(
-                  elevation: 4.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child:CustomVideoPlayer(
-                    customVideoPlayerController: _customVideoPlayerController,
-                  )
-                ),
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: CustomVideoPlayer(
+                      customVideoPlayerController: _customVideoPlayerController,
+                    )),
               ),
               // Card(
               //   elevation: 4.0,
@@ -235,29 +242,36 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 10.h,
               ),
-              Card(
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.network(
-                          'https://streamstek.com/wp-content/uploads/2023/04/blog-live-hybrid-event-cover.webp'),
-                    ),
-                    Positioned(
-                        top: 75.h,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20.0.sp),
-                          child: Text(
-                            '"IF A PICTURE IS WORTH A THOUSAND WORDS, \nTHEN streamstek WILL LEAVE YOU SPEECHLESS"',
-                            maxLines: 2,
-                            style: TextStyle(
+              Container(
+                width: MediaQuery.of(context).size.width - 10,
+                child: Card(
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                            'https://streamstek.com/wp-content/uploads/2023/04/blog-live-hybrid-event-cover.webp'),
+                      ),
+                      Positioned(
+                          top: 75,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            width: MediaQuery.of(context).size.width - 10,
+                            child: Text(
+                              '"IF A PICTURE IS WORTH A THOUSAND WORDS, THEN streamstek WILL LEAVE YOU SPEECHLESS"',
+                              maxLines: 2,
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.sp,
                                 fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ))
-                  ],
+                                fontWeight: FontWeight.bold,
+                                
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ))
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -297,17 +311,18 @@ class _HomeState extends State<Home> {
                   itemCount: videoUrls.length,
                   itemBuilder: (context, index) {
                     String id = YoutubePlayer.convertUrlToId(videoUrls[index])!;
-                    YoutubePlayerController controller2 = YoutubePlayerController(
-                        initialVideoId: id!,
-                        flags: const YoutubePlayerFlags(
-                          mute: false,
-                          autoPlay: false,
-                          disableDragSeek: true,
-                          loop: false,
-                          isLive: false,
-                          forceHD: false,
-                          enableCaption: false,
-                        ));
+                    YoutubePlayerController controller2 =
+                        YoutubePlayerController(
+                            initialVideoId: id!,
+                            flags: const YoutubePlayerFlags(
+                              mute: false,
+                              autoPlay: false,
+                              disableDragSeek: true,
+                              loop: false,
+                              isLive: false,
+                              forceHD: false,
+                              enableCaption: false,
+                            ));
                     if (index == selectedController) {
                       controller2.play();
                     } else {
@@ -328,7 +343,8 @@ class _HomeState extends State<Home> {
                                           "https://www.youtube.com/watch?v=CKjl4XYLBDU&list=PLL4lSgC-rRQmk4vWuei41zEEgD892sJGS");
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(18, 8, 18, 8),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          18, 8, 18, 8),
                                       child: Column(
                                         children: [
                                           Icon(
@@ -467,11 +483,14 @@ class _HomeState extends State<Home> {
                                 SizedBox(
                                   height: 5.h,
                                 ),
-                                Text(
-                                  review,
-                                  style: const TextStyle(
-                                    color: Colors.black, // Customize text color
-                                    fontSize: 16.0, // Customize text size
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    review,
+                                    style: TextStyle(
+                                      color: Colors.black, // Customize text color
+                                      fontSize: 16.sp, // Customize text size
+                                    ),
                                   ),
                                 ),
                               ],
@@ -483,144 +502,163 @@ class _HomeState extends State<Home> {
                   );
                 }).toList(),
               ),
+              
               SizedBox(
                 height: 12.h,
               ),
               Container(
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10), color: Colors.white),
-                height: 610.h,
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white),
+                height: 740,
                 width: MediaQuery.of(context).size.width - 20.w,
-                child: Padding(
-                  padding: EdgeInsets.all(12.0.sp),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      child: Text(
                         'VIDEO PRODUCTION PRICING',
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 20.sp,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      Text(
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    SizedBox(
+                      child: Text(
                         'MADE EASY',
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 18.sp,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: Text(
                         'streamstek is proud to be the only miami video production company - to offer an online brochure of creative services and pricing; that are designed to fit your goals, timeline, and budget',
-                        textAlign: TextAlign.justify,
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        'These are the same tools we use grow our business and lead the South Florida video production industry.',
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        "Simply choose from individual services, all-inclusive packages, or request a custom quote to get things started. It's really that easy to get high-quality content created; for businesses of all shapes and sizes.",
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Expanded(
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                            aspectRatio: 16 / 9,
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            enableInfiniteScroll: true,
-                            autoPlayAnimationDuration:
-                                const Duration(milliseconds: 800),
-                            viewportFraction: 0.8,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _currentImageIndex = index;
-                              });
-                            },
-                          ),
-                          items: imagePaths.map((imagePath) {
-                            return Image.asset(imagePath,
-                                height: 110.0.h, // Set your desired height
-                                width: 400.0.w);
-                          }).toList(),
-                          carouselController: controller,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: imagePaths.asMap().entries.map((entry) {
-                          int index = entry.key;
-                          return Container(
-                            width: 8.0.w,
-                            height: 8.0.h,
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 2.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentImageIndex == index
-                                  ? AppColors.primaryColor
-                                  : Colors.grey, // Active and inactive dot colors
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
                             ),
-                          );
-                        }).toList(),
+                            
                       ),
-                      SizedBox(
-                        height: 10.h,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        'These are the same tools we use grow our business and lead the South Florida video production industry.',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Poppins',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
                       ),
-                      Center(
-                        child: Container(
-                          height: 30.h,
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              color: AppColors.primaryColor,
-                              border: Border.all(color: Colors.transparent)),
-                          child: Center(
-                              child: Text(
-                            'Get Pricing',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Poppins',
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w600),
-                          )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        "Simply choose from individual services, all-inclusive packages, or request a custom quote to get things started. It's really that easy to get high-quality content created; for businesses of all shapes and sizes.",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Poppins',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      // color: Colors.red,
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          enlargeCenterPage: true,
+                          autoPlay: true,
+                          // aspectRatio: 16 / 10,
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enableInfiniteScroll: true,
+                          autoPlayAnimationDuration:
+                              const Duration(milliseconds: 800),
+                          viewportFraction: 0.8,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _currentImageIndex = index;
+                            });
+                          },
                         ),
+                        items: imagePaths.map((imagePath) {
+                          return Image.asset(imagePath,
+                              // height: 100,
+                              width: 400,
+                              fit: BoxFit.fill,
+                              );
+                        }).toList(),
+                        carouselController: controller,
                       ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: imagePaths.asMap().entries.map((entry) {
+                        int index = entry.key;
+                        return Container(
+                          width: 8.0.w,
+                          height: 8.0.h,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentImageIndex == index
+                                ? AppColors.primaryColor
+                                : Colors
+                                    .grey, // Active and inactive dot colors
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Center(
+                      child: Container(
+                        height: 35.h,
+                        width: 150.w,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.sp),
+                            color: AppColors.primaryColor,
+                            border: Border.all(color: Colors.transparent)),
+                        child: Center(
+                            child: Text(
+                          'Get Pricing',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Poppins',
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w600),
+                        )),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -640,25 +678,29 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.bold),
                       ),
                       Expanded(
-                        child: Text(
-                          'Communication is the fine line between obscurity... '
-                              'or dominating your market. And nothing is more powerful'
-                              ' at convincing someone to take a predetermined action'
-                              ' than watching a video. Video engages the senses, and awakens your emotions.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Poppins',
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'Communication is the fine line between obscurity... '
+                            'or dominating your market. And nothing is more powerful'
+                            ' at convincing someone to take a predetermined action'
+                            ' than watching a video. Video engages the senses, and awakens your emotions.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Poppins',
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 15.h,),
+              SizedBox(
+                height: 15.h,
+              ),
               CarouselSlider(
                 options: CarouselOptions(
                   height: 190.0.h,
@@ -700,20 +742,23 @@ class _HomeState extends State<Home> {
                               SizedBox(
                                 height: 10.0.h,
                               ),
-
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Tell Your Story', // Review text
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
-                                        
                                       ),
                                     ),
                                   ),
@@ -724,14 +769,19 @@ class _HomeState extends State<Home> {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Build Trust & Confidence', // Review text
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -744,14 +794,19 @@ class _HomeState extends State<Home> {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Demonstrate Products or Services ', // Review text
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -785,7 +840,6 @@ class _HomeState extends State<Home> {
                                 children: [
                                   Text(
                                     'DIFFERENTIATE',
-                                    
                                     style: TextStyle(
                                       fontSize: 17.0.sp,
                                       fontWeight: FontWeight.bold,
@@ -796,17 +850,21 @@ class _HomeState extends State<Home> {
                               SizedBox(
                                 height: 10.0.h,
                               ),
-
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Stand Out From Your Competition ', // Review text
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -819,14 +877,19 @@ class _HomeState extends State<Home> {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Be Remembered & Respectede', // Review text
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -839,14 +902,19 @@ class _HomeState extends State<Home> {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Showcase Your Value Proposition ', // Review text
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -883,7 +951,7 @@ class _HomeState extends State<Home> {
                                   Text(
                                     'BOTTOM LINE',
                                     maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 17.0.sp,
                                       fontWeight: FontWeight.bold,
@@ -894,17 +962,21 @@ class _HomeState extends State<Home> {
                               SizedBox(
                                 height: 10.0.h,
                               ),
-
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Reduce Sales & Support Costs',
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -917,14 +989,19 @@ class _HomeState extends State<Home> {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'More Engagement & Conversions ',
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -937,14 +1014,19 @@ class _HomeState extends State<Home> {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.arrow_circle_right_outlined,size: 23.sp,),
-                                  SizedBox(width: 3.w,),
+                                  Icon(
+                                    Icons.arrow_circle_right_outlined,
+                                    size: 23.sp,
+                                  ),
+                                  SizedBox(
+                                    width: 3.w,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       'Video Works for You 24/7  ',
                                       maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15.0.sp,
                                       ),
@@ -1101,7 +1183,9 @@ class _HomeState extends State<Home> {
               //     ],
               //   ),
               // ),
-              SizedBox(height: 20.h,)
+              SizedBox(
+                height: 20.h,
+              )
 
               // Container(
               //   decoration: BoxDecoration(

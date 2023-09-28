@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "stream" "\0"
+            VALUE "FileDescription", "Streamstek" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "stream" "\0"
+            VALUE "InternalName", "Streamstek" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "stream.exe" "\0"
-            VALUE "ProductName", "stream" "\0"
+            VALUE "ProductName", "Streamstek" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

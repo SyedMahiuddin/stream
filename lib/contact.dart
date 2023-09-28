@@ -35,7 +35,7 @@ class _ContactScreenState extends State<ContactScreen> {
           children: [
             InkWell(
               onTap: (){
-                _launchDialer('+8801783080181');
+                _launchDialer('+1 (954) 625-9123');
               },
                 child: Image.asset("images/call.gif")),
             SizedBox(height: 10.h,),
