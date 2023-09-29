@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -7,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stream/ifream.dart';
 import 'package:stream/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
   late CustomVideoPlayerController _customVideoPlayerController;
   final String videoUrl = 'https://www.youtube.com/watch?v=B07MzA6IT58';
   bool _isVideoReady = false; // Added a flag to track video readiness
-
+final webController = WebViewController();
   @override
   void initState() {
     final videoID = YoutubePlayer.convertUrlToId(videoURl);
@@ -80,11 +81,34 @@ class _HomeState extends State<Home> {
               child: CircularProgressIndicator(),
             ),
             deviceOrientationsAfterFullscreen: [DeviceOrientation.portraitUp]));
+   
+     webController
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(
+          "https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742&autoplay=true&allowfullscreen=true"));
+    
+   
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       backgroundColor: AppColors.bgcolor,
       body: SizedBox(
@@ -216,14 +240,28 @@ class _HomeState extends State<Home> {
               SizedBox(
                 width: MediaQuery.of(context).size.width - 30.w,
                 height: 180.h,
-                child: Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: CustomVideoPlayer(
-                      customVideoPlayerController: _customVideoPlayerController,
-                    )),
+                // child: IframeScreen(),
+                child: WebViewWidget(controller: webController)
+                // child: Html(data: '''<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742" allow="autoplay" allowfullscreen frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>'''),
+
+                // Card(
+                //     elevation: 4.0,
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(12),
+                //     ),
+                //     child: CustomVideoPlayer(
+                //       customVideoPlayerController: _customVideoPlayerController,
+                //     )),
+
+            //     child: Html(
+            //       data: '''
+            //   <div style="padding:56.25% 0 0 0;position:relative;"
+            //     <iframe src="https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742"
+            //       allow="autoplay" allowfullscreen frameborder="0"
+            //       style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+            //   </div>
+            // ''',
+            //     ),
               ),
               // Card(
               //   elevation: 4.0,
@@ -265,7 +303,6 @@ class _HomeState extends State<Home> {
                                 fontSize: 15.sp,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.bold,
-                                
                               ),
                               textAlign: TextAlign.left,
                             ),
@@ -427,82 +464,82 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 10.h,
               ),
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 180.0.h,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 5),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  pauseAutoPlayOnTouch: true,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: true,
-                ),
-                items: reviews.map((review) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150.h,
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Customize the background color
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.person,
-                                      size: 50.sp,
-                                    ),
-                                    SizedBox(
-                                      width: 3.w,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          'Nick Presley',
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          'Adelle Tracy',
-                                          style: TextStyle(fontSize: 13.sp),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Text(
-                                    review,
-                                    style: TextStyle(
-                                      color: Colors.black, // Customize text color
-                                      fontSize: 16.sp, // Customize text size
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
-              
+              // CarouselSlider(
+              //   options: CarouselOptions(
+              //     height: 180.0.h,
+              //     autoPlay: true,
+              //     autoPlayInterval: const Duration(seconds: 5),
+              //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              //     pauseAutoPlayOnTouch: true,
+              //     enlargeCenterPage: true,
+              //     enableInfiniteScroll: true,
+              //   ),
+              //   items: reviews.map((review) {
+              //     return Builder(
+              //       builder: (BuildContext context) {
+              //         return Container(
+              //           width: MediaQuery.of(context).size.width,
+              //           height: 150.h,
+              //           margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              //           decoration: BoxDecoration(
+              //             color: Colors.white, // Customize the background color
+              //             borderRadius: BorderRadius.circular(10.0),
+              //           ),
+              //           child: Center(
+              //             child: Padding(
+              //               padding: const EdgeInsets.all(8.0),
+              //               child: Column(
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 mainAxisAlignment: MainAxisAlignment.center,
+              //                 children: [
+              //                   Row(
+              //                     children: [
+              //                       Icon(
+              //                         Icons.person,
+              //                         size: 50.sp,
+              //                       ),
+              //                       SizedBox(
+              //                         width: 3.w,
+              //                       ),
+              //                       Column(
+              //                         children: [
+              //                           Text(
+              //                             'Nick Presley',
+              //                             style: TextStyle(
+              //                                 fontSize: 15.sp,
+              //                                 fontWeight: FontWeight.bold),
+              //                           ),
+              //                           Text(
+              //                             'Adelle Tracy',
+              //                             style: TextStyle(fontSize: 13.sp),
+              //                           ),
+              //                         ],
+              //                       )
+              //                     ],
+              //                   ),
+              //                   SizedBox(
+              //                     height: 5.h,
+              //                   ),
+              //                   Container(
+              //                     padding: EdgeInsets.symmetric(horizontal: 5),
+              //                     child: Text(
+              //                       review,
+              //                       style: TextStyle(
+              //                         color: Colors.black, // Customize text color
+              //                         fontSize: 16.sp, // Customize text size
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //     );
+              //   }).toList(),
+              // ),
+
               SizedBox(
                 height: 12.h,
               ),
@@ -547,12 +584,11 @@ class _HomeState extends State<Home> {
                         'streamstek is proud to be the only miami video production company - to offer an online brochure of creative services and pricing; that are designed to fit your goals, timeline, and budget',
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            ),
-                            
+                          color: Colors.black,
+                          fontFamily: 'Poppins',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -607,11 +643,12 @@ class _HomeState extends State<Home> {
                           },
                         ),
                         items: imagePaths.map((imagePath) {
-                          return Image.asset(imagePath,
-                              // height: 100,
-                              width: 400,
-                              fit: BoxFit.fill,
-                              );
+                          return Image.asset(
+                            imagePath,
+                            // height: 100,
+                            width: 400,
+                            fit: BoxFit.fill,
+                          );
                         }).toList(),
                         carouselController: controller,
                       ),
@@ -629,8 +666,7 @@ class _HomeState extends State<Home> {
                             shape: BoxShape.circle,
                             color: _currentImageIndex == index
                                 ? AppColors.primaryColor
-                                : Colors
-                                    .grey, // Active and inactive dot colors
+                                : Colors.grey, // Active and inactive dot colors
                           ),
                         );
                       }).toList(),
@@ -701,347 +737,347 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 15.h,
               ),
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 190.0.h,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 5),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  pauseAutoPlayOnTouch: true,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: true,
-                ),
-                items: [
-                  Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 130.0.h,
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    'VISUALLY STIMULATING',
-                                    style: TextStyle(
-                                      fontSize: 17.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Tell Your Story', // Review text
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Build Trust & Confidence', // Review text
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Demonstrate Products or Services ', // Review text
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150.0.h,
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    'DIFFERENTIATE',
-                                    style: TextStyle(
-                                      fontSize: 17.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Stand Out From Your Competition ', // Review text
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Be Remembered & Respectede', // Review text
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Showcase Your Value Proposition ', // Review text
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+              // CarouselSlider(
+              //   options: CarouselOptions(
+              //     height: 190.0.h,
+              //     autoPlay: true,
+              //     autoPlayInterval: const Duration(seconds: 5),
+              //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              //     pauseAutoPlayOnTouch: true,
+              //     enlargeCenterPage: true,
+              //     enableInfiniteScroll: true,
+              //   ),
+              //   items: [
+              //     Builder(
+              //       builder: (BuildContext context) {
+              //         return Container(
+              //           width: MediaQuery.of(context).size.width,
+              //           height: 130.0.h,
+              //           margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              //           decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(10.0),
+              //           ),
+              //           child: Padding(
+              //             padding: const EdgeInsets.all(15.0),
+              //             child: Column(
+              //               crossAxisAlignment: CrossAxisAlignment.start,
+              //               mainAxisAlignment: MainAxisAlignment.start,
+              //               children: [
+              //                 Column(
+              //                   children: [
+              //                     Text(
+              //                       'VISUALLY STIMULATING',
+              //                       style: TextStyle(
+              //                         fontSize: 17.0.sp,
+              //                         fontWeight: FontWeight.bold,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 10.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Tell Your Story', // Review text
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 5.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Build Trust & Confidence', // Review text
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 5.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Demonstrate Products or Services ', // Review text
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //     Builder(
+              //       builder: (BuildContext context) {
+              //         return Container(
+              //           width: MediaQuery.of(context).size.width,
+              //           height: 150.0.h,
+              //           margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              //           decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(10.0),
+              //           ),
+              //           child: Padding(
+              //             padding: const EdgeInsets.all(15.0),
+              //             child: Column(
+              //               crossAxisAlignment: CrossAxisAlignment.start,
+              //               mainAxisAlignment: MainAxisAlignment.start,
+              //               children: [
+              //                 Column(
+              //                   children: [
+              //                     Text(
+              //                       'DIFFERENTIATE',
+              //                       style: TextStyle(
+              //                         fontSize: 17.0.sp,
+              //                         fontWeight: FontWeight.bold,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 10.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Stand Out From Your Competition ', // Review text
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 5.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Be Remembered & Respectede', // Review text
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 5.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Showcase Your Value Proposition ', // Review text
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //     ),
 
-                  // Third container with different data
-                  Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150.0.h,
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    'BOTTOM LINE',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 17.0.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Reduce Sales & Support Costs',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'More Engagement & Conversions ',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5.0.h,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.arrow_circle_right_outlined,
-                                    size: 23.sp,
-                                  ),
-                                  SizedBox(
-                                    width: 3.w,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Video Works for You 24/7  ',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+              //     // Third container with different data
+              //     Builder(
+              //       builder: (BuildContext context) {
+              //         return Container(
+              //           width: MediaQuery.of(context).size.width,
+              //           height: 150.0.h,
+              //           margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              //           decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.circular(10.0),
+              //           ),
+              //           child: Padding(
+              //             padding: const EdgeInsets.all(15.0),
+              //             child: Column(
+              //               crossAxisAlignment: CrossAxisAlignment.start,
+              //               mainAxisAlignment: MainAxisAlignment.start,
+              //               children: [
+              //                 Column(
+              //                   children: [
+              //                     Text(
+              //                       'BOTTOM LINE',
+              //                       maxLines: 2,
+              //                       overflow: TextOverflow.ellipsis,
+              //                       style: TextStyle(
+              //                         fontSize: 17.0.sp,
+              //                         fontWeight: FontWeight.bold,
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 10.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Reduce Sales & Support Costs',
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 5.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'More Engagement & Conversions ',
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 SizedBox(
+              //                   height: 5.0.h,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Icon(
+              //                       Icons.arrow_circle_right_outlined,
+              //                       size: 23.sp,
+              //                     ),
+              //                     SizedBox(
+              //                       width: 3.w,
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         'Video Works for You 24/7  ',
+              //                         maxLines: 2,
+              //                         overflow: TextOverflow.ellipsis,
+              //                         style: TextStyle(
+              //                           color: Colors.black,
+              //                           fontSize: 15.0.sp,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //   ],
+              // ),
 
               // SizedBox(
               //   width: MediaQuery.of(context).size.width,
