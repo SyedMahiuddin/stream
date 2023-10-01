@@ -27,7 +27,7 @@ class TicketScreen extends StatelessWidget {
       )
       ..loadRequest(Uri.parse("https://streamstek.com/reviews/"));
     return Scaffold(
-        body: Center(child: Text('Coming Soon'))
+        body: Center(child: Text('Coming Soon', style: TextStyle(fontSize: 20),))
     );
   }
 }
