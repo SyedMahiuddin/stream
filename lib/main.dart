@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stream/bottom_nav.dart';
+import 'package:stream/bottom_nav/view/bottom_nav.dart';
 import 'package:stream/splash_screen.dart';
 
 void main() {

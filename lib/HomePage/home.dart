@@ -5,12 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:stream/BookingPage/view/booking.dart';
+import 'package:stream/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:stream/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_html/flutter_html.dart';
+
+import '../BookingPage/controller/booking_controller.dart';
+import '../bottom_nav/view/bottom_nav.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -53,12 +59,12 @@ class _HomeState extends State<Home> {
   late VideoPlayerController _videoPlayerController;
   late CustomVideoPlayerController _customVideoPlayerController;
   final String videoUrl = 'https://www.youtube.com/watch?v=B07MzA6IT58';
+  bool isLoading = true;
+  final webController = WebViewController();
 
-final webController = WebViewController();
   @override
   void initState() {
-    
-     webController
+    webController
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
@@ -74,24 +80,27 @@ final webController = WebViewController();
             return NavigationDecision.navigate;
           },
           onPageFinished: (url) {
-            
+            setState(() {
+              isLoading =
+                  false; // Hide loading indicator when page is finished loading
+            });
           },
           onPageStarted: (url) {
-            
+            setState(() {
+              isLoading =
+                  true; // Show loading indicator when page starts loading
+            });
           },
         ),
-        
       )
       ..loadRequest(Uri.parse(
           "https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742&autoplay=true&allowfullscreen=true"));
-    
-   
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       backgroundColor: AppColors.bgcolor,
       body: SizedBox(
@@ -221,31 +230,39 @@ final webController = WebViewController();
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width - 30.w,
-                height: 180.h,
-                // child: IframeScreen(),
-                child: WebViewWidget(controller: webController)
-                // child: Html(data: '''<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742" allow="autoplay" allowfullscreen frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>'''),
+                  width: MediaQuery.of(context).size.width - 30.w,
+                  height: 180.h,
+                  // child: IframeScreen(),
+                  child: Stack(
+                    children: [
+                      WebViewWidget(controller: webController),
+                      if (isLoading)
+                        Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    ],
+                  )
+                  // child: Html(data: '''<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742" allow="autoplay" allowfullscreen frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>'''),
 
-                // Card(
-                //     elevation: 4.0,
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     child: CustomVideoPlayer(
-                //       customVideoPlayerController: _customVideoPlayerController,
-                //     )),
+                  // Card(
+                  //     elevation: 4.0,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(12),
+                  //     ),
+                  //     child: CustomVideoPlayer(
+                  //       customVideoPlayerController: _customVideoPlayerController,
+                  //     )),
 
-            //     child: Html(
-            //       data: '''
-            //   <div style="padding:56.25% 0 0 0;position:relative;"
-            //     <iframe src="https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742"
-            //       allow="autoplay" allowfullscreen frameborder="0"
-            //       style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-            //   </div>
-            // ''',
-            //     ),
-              ),
+                  //     child: Html(
+                  //       data: '''
+                  //   <div style="padding:56.25% 0 0 0;position:relative;"
+                  //     <iframe src="https://player.restream.io/?token=0ee76f3eb79641ed9513df4893419742"
+                  //       allow="autoplay" allowfullscreen frameborder="0"
+                  //       style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                  //   </div>
+                  // ''',
+                  //     ),
+                  ),
               // Card(
               //   elevation: 4.0,
               //   shape: RoundedRectangleBorder(
@@ -508,7 +525,8 @@ final webController = WebViewController();
                                   child: Text(
                                     review,
                                     style: TextStyle(
-                                      color: Colors.black, // Customize text color
+                                      color: Colors.black,
+                                      // Customize text color
                                       fontSize: 16.sp, // Customize text size
                                     ),
                                   ),
@@ -667,13 +685,21 @@ final webController = WebViewController();
                             color: AppColors.primaryColor,
                             border: Border.all(color: Colors.transparent)),
                         child: Center(
-                            child: Text(
-                          'Get Pricing',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600),
+                            child: TextButton(
+                                onPressed: () {
+                                  BottomNavController btm = Get.find();
+                                  btm.selectedIndex.value = 2;
+                                  Get.offAll(() => BottomNavScreen());
+                                },
+
+                          child: Text(
+                            'Get Pricing',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600),
+                          ),
                         )),
                       ),
                     ),
@@ -822,7 +848,8 @@ final webController = WebViewController();
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Demonstrate Products or Services ', // Review text
+                                      'Demonstrate Products or Services ',
+                                      // Review text
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -880,7 +907,8 @@ final webController = WebViewController();
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Stand Out From Your Competition ', // Review text
+                                      'Stand Out From Your Competition ',
+                                      // Review text
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -905,7 +933,8 @@ final webController = WebViewController();
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Be Remembered & Respectede', // Review text
+                                      'Be Remembered & Respectede',
+                                      // Review text
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -930,7 +959,8 @@ final webController = WebViewController();
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'Showcase Your Value Proposition ', // Review text
+                                      'Showcase Your Value Proposition ',
+                                      // Review text
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -1089,7 +1119,7 @@ final webController = WebViewController();
               //                         fontWeight: FontWeight.bold,
               //                       ),
               //                     ),
-              
+
               //                   ],
               //                 ),
               //                 SizedBox(
@@ -1202,7 +1232,7 @@ final webController = WebViewController();
               //     ],
               //   ),
               // ),
-              
+
               SizedBox(
                 height: 20.h,
               )
