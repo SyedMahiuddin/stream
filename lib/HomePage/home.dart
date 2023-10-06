@@ -7,6 +7,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:stream/BookingPage/view/booking.dart';
+import 'package:stream/GetPricing/view/getpricing.dart';
 import 'package:stream/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:stream/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -205,13 +206,19 @@ class _HomeState extends State<Home> {
                               border: Border.all(color: Colors.transparent)),
                           child: Center(
                               child: FittedBox(
-                            child: Text(
+                            child: TextButton(onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => GetPricing()),
+                              );
+                            }, child: Text(
                               'Get Started',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Poppins',
                                   fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w600),),
+
                             ),
                           )),
                         ),
