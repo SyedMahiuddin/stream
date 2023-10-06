@@ -1,4 +1,4 @@
-package com.example.stream
+package com.stream.streamstek
 
 import io.flutter.embedding.android.FlutterActivity
 
