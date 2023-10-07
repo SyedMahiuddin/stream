@@ -12,11 +12,14 @@ class BookingScreen extends StatefulWidget {
   State<BookingScreen> createState() => _BookingScreenState();
 }
 
+
 class _BookingScreenState extends State<BookingScreen> {
+  final controller = WebViewController();
+  BookingController bookingController = Get.put(BookingController());
   @override
-  Widget build(BuildContext context) {
-    BookingController bookingController = Get.put(BookingController());
-    final controller = WebViewController()
+  void initState() {
+        log('call init state');
+   controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
@@ -26,16 +29,19 @@ class _BookingScreenState extends State<BookingScreen> {
           },
           onPageStarted: (String url) {
             bookingController.isLoading.value = true;
-            log('start');
+            log('call start : $url');
           },
           onPageFinished: (String url) {
-            if (bookingController.isFirst.value) {
-              bookingController.isFirst.value = false;
-            } else {
+            // if (bookingController.isFirst.value) {
+            //   bookingController.isFirst.value = false;
+            // } else {
               bookingController.isLoading.value = false;
-              bookingController.isFirst.value = true;
-              log('finish');
-            }
+              // bookingController.isFirst.value = true;
+              log('call  finish : $url');
+            // }
+          },
+          onUrlChange: (change) {
+            log('call  onUrlChange : $change');
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
@@ -46,7 +52,13 @@ class _BookingScreenState extends State<BookingScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse("https://streamstek.com/booking-page-for-app"));
+      ..loadRequest(Uri.parse("https://streamstek.com/booking-page-for-app/"));
+    
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
     return Obx(
       () => Scaffold(
         body: Stack(

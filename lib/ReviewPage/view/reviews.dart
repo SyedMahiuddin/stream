@@ -22,16 +22,12 @@ class ReviewScreen extends StatelessWidget {
           },
          onPageStarted: (String url) {
             reviewController.isLoading.value = true;
-            log('start');
+            log('call start');
           },
           onPageFinished: (String url) {
-            if (reviewController.isFirst.value) {
-              reviewController.isFirst.value = false;
-            } else {
+         
               reviewController.isLoading.value = false;
-              reviewController.isFirst.value = true;
-              log('finish');
-            }
+         log('call finish');
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
@@ -42,7 +38,7 @@ class ReviewScreen extends StatelessWidget {
           },
         ),
       )
-      ..loadRequest(Uri.parse("https://streamstek.com/review-page-for-app"));
+      ..loadRequest(Uri.parse("https://streamstek.com/review-page-for-app/"));
     return Obx(
       () => Scaffold(
         body: Stack(

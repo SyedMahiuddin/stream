@@ -26,11 +26,12 @@ class _GetPricingState extends State<GetPricing> {
     //   selectedIndex = index;
     // });
   }
-        final controller = WebViewController();
+
+  final controller = WebViewController();
   @override
   void initState() {
     GetPricingController getPricingController = Get.put(GetPricingController());
-       controller
+    controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
@@ -40,16 +41,16 @@ class _GetPricingState extends State<GetPricing> {
           },
           onPageStarted: (String url) {
             getPricingController.isLoading.value = true;
-            log('start');
+            log('call start');
           },
           onPageFinished: (String url) {
-            if (getPricingController.isFirst.value) {
-              getPricingController.isFirst.value = false;
-            } else {
-              getPricingController.isLoading.value = false;
-              getPricingController.isFirst.value = true;
-              log('finish');
-            }
+            // if (getPricingController.isFirst.value) {
+            //   getPricingController.isFirst.value = false;
+            // } else {
+            getPricingController.isLoading.value = false;
+            //   getPricingController.isFirst.value = true;
+            log('call finish');
+            // }
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
@@ -60,7 +61,8 @@ class _GetPricingState extends State<GetPricing> {
           },
         ),
       )
-      ..loadRequest(Uri.parse("https://api.leadconnectorhq.com/widget/bookings/streamstekbooking"));
+      ..loadRequest(Uri.parse(
+          "https://api.leadconnectorhq.com/widget/bookings/streamstekbooking"));
     super.initState();
   }
 
@@ -68,63 +70,75 @@ class _GetPricingState extends State<GetPricing> {
   Widget build(BuildContext context) {
     GetPricingController getPricingController = Get.put(GetPricingController());
 
-
     return Obx(
-          () => SafeArea(
-            child: Scaffold(
-              appBar: CustomAppBar(),
-                  body: Stack(
+      () => SafeArea(
+        child: Scaffold(
+          appBar: CustomAppBar(),
+          body: Stack(
             children: [
               WebViewWidget(controller: controller),
               getPricingController.isLoading.value
                   ? Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: CircularProgressIndicator(),
-                ),
-              )
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
                   : const Stack()
             ],
-                  ),
-              bottomNavigationBar: BottomNavigationBar(
-                selectedItemColor: Colors.black,
-                unselectedItemColor: Colors.black,
-                showSelectedLabels: true, // Show labels for selected items
-                showUnselectedLabels: true, //
-                unselectedLabelStyle: TextStyle(color: Colors.grey),
-                selectedFontSize: 15.sp,
-                backgroundColor:Colors.red,
-                currentIndex: 0,
-                onTap: _onItemTapped,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home,color: Colors.black,),
-                    label: 'Home',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.airplane_ticket_outlined,color: Colors.black,),
-                    label: 'Ticket',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.event,color: Colors.black,),
-                    label: 'Booking',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.reviews_outlined,color: Colors.black,),
-                    label: 'Review',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.phone,color: Colors.black,),
-                    label: 'Contact',
-                  ),
-          
-                ],
-                // selectedLabelStyle: TextStyle(color: Color(0xFFF31A54)),
-                // unselectedLabelStyle: TextStyle(color: Colors.black),
-              ),
-          
-            ),
           ),
+          bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.black,
+            showSelectedLabels: true, // Show labels for selected items
+            showUnselectedLabels: true, //
+            unselectedLabelStyle: TextStyle(color: Colors.grey),
+            selectedFontSize: 15.sp,
+            backgroundColor: Colors.red,
+            currentIndex: 0,
+            onTap: _onItemTapped,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
+                  color: Colors.black,
+                ),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.airplane_ticket_outlined,
+                  color: Colors.black,
+                ),
+                label: 'Ticket',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.event,
+                  color: Colors.black,
+                ),
+                label: 'Booking',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.reviews_outlined,
+                  color: Colors.black,
+                ),
+                label: 'Review',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.phone,
+                  color: Colors.black,
+                ),
+                label: 'Contact',
+              ),
+            ],
+            // selectedLabelStyle: TextStyle(color: Color(0xFFF31A54)),
+            // unselectedLabelStyle: TextStyle(color: Colors.black),
+          ),
+        ),
+      ),
     );
   }
 }
