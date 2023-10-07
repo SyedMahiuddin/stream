@@ -82,6 +82,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             // selectedLabelStyle: TextStyle(color: Color(0xFFF31A54)),
             // unselectedLabelStyle: TextStyle(color: Colors.black),
           ),
+
         ),
       ),
     );
