@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:stream/BookingPage/view/booking.dart';
 import 'package:stream/GetPricing/view/getpricing.dart';
 import 'package:stream/bottom_nav/controller/bottom_nav_controller.dart';
+import 'package:stream/privacy/privacy_page.dart';
 import 'package:stream/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -17,6 +18,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../BookingPage/controller/booking_controller.dart';
+import '../Terms and Conditions/terms_page.dart';
 import '../bottom_nav/view/bottom_nav.dart';
 
 class Home extends StatefulWidget {
@@ -1242,7 +1244,33 @@ class _HomeState extends State<Home> {
 
               SizedBox(
                 height: 20.h,
-              )
+              ),
+              Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PrivacyPage()),
+                        );
+                      },
+                      child: Text('Privacy Policy ',style: TextStyle(color: Colors.grey),)),
+                 Container(width: 10.w,child: Text('||',style: TextStyle(color: Colors.grey),),),
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TermsPage()),
+                        );
+                      },
+                      child: Text('Terms & Condition',style: TextStyle(color: Colors.grey),)),
+
+                ],
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
 
               // Container(
               //   decoration: BoxDecoration(
