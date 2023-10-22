@@ -556,12 +556,12 @@ class _HomeState extends State<Home> {
                 height: 12.h,
               ),
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white),
-                height: MediaQuery.of(context).size.height-80.w,
-                width: MediaQuery.of(context).size.width - 20.w,
+                // height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width - 20,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -571,12 +571,12 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 20.sp,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(
-                      height: 5.h,
+                      height: 5,
                     ),
                     SizedBox(
                       child: Text(
@@ -584,12 +584,12 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 18.sp,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     SizedBox(
                       child: Text(
@@ -598,13 +598,13 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Poppins',
-                          fontSize: 15.sp,
+                          fontSize: MediaQuery.of(context).size.width > 550 ? 25 :  15,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     SizedBox(
                       child: Text(
@@ -613,12 +613,12 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 15.sp,
+                            fontSize: MediaQuery.of(context).size.width > 550 ? 25 :  15,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     SizedBox(
                       child: Text(
@@ -627,12 +627,12 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 15.sp,
+                            fontSize: MediaQuery.of(context).size.width > 550 ? 25 :  15,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Container(
                       // color: Colors.red,
@@ -642,7 +642,7 @@ class _HomeState extends State<Home> {
                         options: CarouselOptions(
                           enlargeCenterPage: true,
                           autoPlay: true,
-                          aspectRatio: 16 / 9,
+                          aspectRatio: MediaQuery.of(context).size.width > 550 ? 16/5 : 16 / 9,
                           autoPlayCurve: Curves.fastOutSlowIn,
                           enableInfiniteScroll: true,
                           autoPlayAnimationDuration:
@@ -670,8 +670,8 @@ class _HomeState extends State<Home> {
                       children: imagePaths.asMap().entries.map((entry) {
                         int index = entry.key;
                         return Container(
-                          width: 8.0.w,
-                          height: 8.0.h,
+                          width: 8.0,
+                          height: 8.0,
                           margin: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 2.0),
                           decoration: BoxDecoration(
@@ -684,15 +684,15 @@ class _HomeState extends State<Home> {
                       }).toList(),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Center(
                       child: Container(
-                        height: 35.h,
-                        width: 150.w,
+                        height: MediaQuery.of(context).size.width > 550 ? 50 : 35,
+                        width: MediaQuery.of(context).size.width > 550 ? 300: 150,
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.sp),
+                            borderRadius: BorderRadius.circular(20),
                             color: AppColors.primaryColor,
                             border: Border.all(color: Colors.transparent)),
                         child: Center(
@@ -708,7 +708,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Poppins',
-                                fontSize: 15.sp,
+                                fontSize:MediaQuery.of(context).size.width > 550 ? 25: 15,
                                 fontWeight: FontWeight.w600),
                           ),
                         )),
@@ -784,7 +784,7 @@ class _HomeState extends State<Home> {
                           padding:  EdgeInsets.all(15.0.sp),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
                                 children: [
@@ -893,7 +893,7 @@ class _HomeState extends State<Home> {
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
                                 children: [
@@ -1005,7 +1005,7 @@ class _HomeState extends State<Home> {
                           padding:  EdgeInsets.all(15.0.sp),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
                                 children: [
