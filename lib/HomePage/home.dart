@@ -560,7 +560,7 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white),
-                height: 740,
+                height: MediaQuery.of(context).size.height-80.w,
                 width: MediaQuery.of(context).size.width - 20.w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -571,12 +571,12 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 5.h,
                     ),
                     SizedBox(
                       child: Text(
@@ -584,12 +584,12 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     SizedBox(
                       child: Text(
@@ -598,13 +598,13 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Poppins',
-                          fontSize: 15,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     SizedBox(
                       child: Text(
@@ -613,12 +613,12 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 15,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     SizedBox(
                       child: Text(
@@ -627,22 +627,22 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
-                            fontSize: 15,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     Container(
                       // color: Colors.red,
-                      height: 200,
+                      // height: 200,
                       width: MediaQuery.of(context).size.width,
                       child: CarouselSlider(
                         options: CarouselOptions(
                           enlargeCenterPage: true,
                           autoPlay: true,
-                          // aspectRatio: 16 / 10,
+                          aspectRatio: 16 / 9,
                           autoPlayCurve: Curves.fastOutSlowIn,
                           enableInfiniteScroll: true,
                           autoPlayAnimationDuration:
@@ -759,27 +759,29 @@ class _HomeState extends State<Home> {
               ),
               CarouselSlider(
                 options: CarouselOptions(
-                  height: 250.0.h,
+                  // height: 150.0.h,
+                    viewportFraction: 0.8,
                   autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 5),
                   autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   pauseAutoPlayOnTouch: true,
                   enlargeCenterPage: true,
                   enableInfiniteScroll: true,
+                  aspectRatio: 14/9
                 ),
                 items: [
                   Builder(
                     builder: (BuildContext context) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 130.0.h,
+                        // height: 100.0.h,
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding:  EdgeInsets.all(15.0.sp),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -881,7 +883,7 @@ class _HomeState extends State<Home> {
                     builder: (BuildContext context) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 150.0.h,
+                        // height: 150.0.h,
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -988,7 +990,6 @@ class _HomeState extends State<Home> {
                       );
                     },
                   ),
-
                   // Third container with different data
                   Builder(
                     builder: (BuildContext context) {
@@ -1001,7 +1002,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding:  EdgeInsets.all(15.0.sp),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
