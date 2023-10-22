@@ -475,7 +475,7 @@ class _HomeState extends State<Home> {
               ),
               CarouselSlider(
                 options: CarouselOptions(
-                  height: 190.0.h,
+                  height: 240.0.h,
                   autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 5),
                   autoPlayAnimationDuration: const Duration(milliseconds: 800),
@@ -488,7 +488,7 @@ class _HomeState extends State<Home> {
                     builder: (BuildContext context) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 150.h,
+                        height: 140.h,
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
                           color: Colors.white, // Customize the background color
@@ -533,10 +533,12 @@ class _HomeState extends State<Home> {
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     review,
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       color: Colors.black,
                                       // Customize text color
-                                      fontSize: 16.sp, // Customize text size
+                                      fontSize: 16.sp, 
                                     ),
                                   ),
                                 ),
@@ -757,7 +759,7 @@ class _HomeState extends State<Home> {
               ),
               CarouselSlider(
                 options: CarouselOptions(
-                  height: 210.0.h,
+                  height: 250.0.h,
                   autoPlay: true,
                   autoPlayInterval: const Duration(seconds: 5),
                   autoPlayAnimationDuration: const Duration(milliseconds: 800),
