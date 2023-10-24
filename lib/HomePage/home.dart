@@ -50,11 +50,30 @@ class _HomeState extends State<Home> {
   ];
   late YoutubePlayerController _controller;
 
-  List<String> reviews = [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis quam in odio fringilla malesuada.",
-    "In et tortor vitae quam ultrices convallis. Ut a elit eu neque facilisis volutpat ut nec lorem.",
-    "Pellentesque vel ligula eu urna ullamcorper venenatis eget ac leo. Sed eget enim sed elit tempus placerat.",
+  List<String> images = [
+    'images/nam2.png',
+    'images/nam3.png',
+    'images/nam1.png',
+    'images/nam4.png',
+    'images/nam5.png',
   ];
+
+  List<String> names = [
+    'Frandley Julien',
+    'Frantz Francilien Telfort',
+    'Merlyn Chery',
+    'Kenny Francois',
+    'MARIE HARRIS',
+  ];
+
+  List<String> reviews = [
+    'I hired streamstek to handle social media communication and promotion for my law firm. The results were immediate. I was not amazed as Patrick Pluviose is a genius. Strongly recommend!!!',
+    "Patrick and his team responded to our every need and went beyond what was required. We strongly recommend Streamstek & the High Level Marketing Team.",
+        "Streamstek was really professional and I am very satisfied for my daughter 13 years birthday video and photography.",
+        "The best ever to take your company to the next level.",
+        'Streamtek team members are great! Patrick always makes the customers feel comfortable. His teams get along well with customers and collaborate to complete tasks.',
+  ];
+
   List<String> imagePaths = ['images/audio.jpg', 'images/livecast.jpg'];
   int _currentImageIndex = 0;
   final CarouselController controller = CarouselController();
@@ -477,13 +496,13 @@ class _HomeState extends State<Home> {
                 options: CarouselOptions(
                   height: 240.0.h,
                   autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 5),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayInterval: Duration(seconds: 5),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
                   pauseAutoPlayOnTouch: true,
                   enlargeCenterPage: true,
                   enableInfiniteScroll: true,
                 ),
-                items: reviews.map((review) {
+                items: List.generate(images.length, (index) {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
@@ -491,7 +510,7 @@ class _HomeState extends State<Home> {
                         height: 140.h,
                         margin: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
-                          color: Colors.white, // Customize the background color
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Center(
@@ -503,42 +522,27 @@ class _HomeState extends State<Home> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(
-                                      Icons.person,
-                                      size: 50.sp,
+                                    Image.asset(images[index], height: 50.0.h, width: 50.0.w),
+                                    SizedBox(width: 10.w),
+                                    Text(
+                                      names[index],
+                                      style: TextStyle(
+                                        fontSize: 15.0.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                    SizedBox(
-                                      width: 3.w,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          'Nick Presley',
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          'Adelle Tracy',
-                                          style: TextStyle(fontSize: 13.sp),
-                                        ),
-                                      ],
-                                    )
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
+                                SizedBox(height: 5.h),
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
-                                    review,
+                                    reviews[index],
                                     maxLines: 4,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      // Customize text color
-                                      fontSize: 16.sp, 
+                                      fontSize: 16.0.sp,
                                     ),
                                   ),
                                 ),
@@ -549,9 +553,8 @@ class _HomeState extends State<Home> {
                       );
                     },
                   );
-                }).toList(),
+                }),
               ),
-
               SizedBox(
                 height: 12.h,
               ),
