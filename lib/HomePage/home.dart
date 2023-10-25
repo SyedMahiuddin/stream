@@ -250,7 +250,7 @@ class _HomeState extends State<Home> {
                 height: 12.h,
               ),
               Text(
-                'Live Straming',
+                'Live Streaming',
                 style: TextStyle(
                     color: AppColors.primaryColor,
                     fontFamily: 'Poppins',
